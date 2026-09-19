@@ -3,58 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hassany VIP - لوحة تحكم الأكواد</title>
+    <title>Hassany VIP - Dashboard</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: white; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; }
-        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        h2 { margin-top: 0; color: #4facfe; }
-        input, select { width: 100%; padding: 10px; margin: 10px 0; background: rgba(0,0,0,0.5); border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; }
-        button { background: linear-gradient(45deg, #4facfe, #00f2fe); color: black; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        button:hover { opacity: 0.9; }
-        .btn-danger { background: #ff4757; color: white; width: auto; padding: 5px 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #333; }
-        th { background: rgba(0,0,0,0.3); }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0f172a; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 950px; margin: auto; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(15px); padding: 25px; border-radius: 16px; margin-bottom: 25px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        h2 { margin-top: 0; color: #38bdf8; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; color: white; border-radius: 10px; box-sizing: border-box; }
+        input:focus { outline: none; border-color: #38bdf8; }
+        button { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        button:hover { opacity: 0.8; transform: translateY(-2px); }
+        .btn-danger { background: #ef4444; width: auto; padding: 8px 12px; }
+        .btn-warning { background: #f59e0b; width: auto; padding: 8px 12px; }
+        .btn-copy { background: #10b981; width: auto; padding: 8px 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        th, td { padding: 14px; text-align: right; border-bottom: 1px solid #334155; }
+        th { background: rgba(15, 23, 42, 0.5); color: #94a3b8; }
         .flex-row { display: flex; gap: 10px; align-items: center; }
-        .badge { padding: 4px 8px; border-radius: 5px; font-size: 12px; }
-        .bg-green { background: #2ed573; color: black; }
-        .bg-red { background: #ff4757; color: white; }
+        .badge { padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .bg-green { background: #10b981; color: white; }
+        .bg-red { background: #ef4444; color: white; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- إعدادات الربط -->
     <div class="glass-panel">
-        <h2>⚙️ إعدادات GitHub</h2>
-        <input type="password" id="ghToken" placeholder="أدخل توكن GitHub (يبدأ بـ ghp_)">
-        <input type="text" id="repoName" placeholder="اسم الحساب/المستودع (مثال: husszzzz/KA-SA)" value="husszzzz/KA-SA">
-        <button onclick="loadCodes()">💾 حفظ الإعدادات وجلب الأكواد</button>
-        <p id="statusMsg" style="text-align: center; font-size: 14px; color: #2ed573;"></p>
+        <h2>⚙️ إعدادات الربط</h2>
+        <input type="password" id="ghToken" placeholder="توكن GitHub (ghp_...)">
+        <input type="text" id="repoName" placeholder="المستودع (مثال: husszzzz/KA-SA)">
+        <button onclick="loadCodes()">🔄 حفظ وجلب البيانات</button>
+        <p id="statusMsg" style="text-align: center; font-size: 14px; margin-top:15px;"></p>
     </div>
 
-    <!-- إضافة كود جديد -->
     <div class="glass-panel">
-        <h2>➕ إضافة كود جديد</h2>
+        <h2>💎 إضافة كود جديد</h2>
         <div class="flex-row">
-            <input type="text" id="newCode" placeholder="اكتب الكود هنا أو اضغط توليد">
-            <button onclick="generateCode()" style="width: 150px;">توليد عشوائي</button>
+            <input type="text" id="newCode" placeholder="VIP-XXXXXXX">
+            <button onclick="generateCode()" style="width: 150px; background: #6366f1;">توليد 🎲</button>
         </div>
-        <select id="codeDuration">
-            <option value="0">بدون مدة (دائمي / مدى الحياة)</option>
-            <option value="1">يوم واحد</option>
-            <option value="2">يومان</option>
-            <option value="3">3 أيام</option>
-            <option value="7">أسبوع</option>
-            <option value="30">شهر</option>
-        </select>
-        <button onclick="addCode()">إضافة الكود للقاعدة</button>
+        <input type="number" id="codeDuration" placeholder="عدد الأيام (اكتب 0 للكود الدائمي)" min="0" value="30">
+        <button onclick="addCode()">إضافة الكود للقاعدة ➕</button>
     </div>
 
-    <!-- جدول الأكواد -->
-    <div class="glass-panel">
-        <h2>📋 قائمة الأكواد</h2>
+    <div class="glass-panel" style="overflow-x: auto;">
+        <h2>📋 إدارة الأكواد</h2>
         <table>
             <thead>
                 <tr>
@@ -62,12 +55,10 @@
                     <th>المدة</th>
                     <th>الحالة</th>
                     <th>تاريخ الانتهاء</th>
-                    <th>إجراء</th>
+                    <th>إجراءات</th>
                 </tr>
             </thead>
-            <tbody id="codesTable">
-                <!-- سيتم حقن الأكواد هنا -->
-            </tbody>
+            <tbody id="codesTable"></tbody>
         </table>
     </div>
 </div>
@@ -77,7 +68,6 @@
     let fileSha = "";
     let codesDb = {};
 
-    // تحميل البيانات المحفوظة محلياً عند فتح الصفحة
     window.onload = () => {
         if(localStorage.getItem("ghToken")) {
             document.getElementById("ghToken").value = localStorage.getItem("ghToken");
@@ -88,13 +78,18 @@
 
     function showStatus(msg, isError = false) {
         const el = document.getElementById("statusMsg");
-        el.style.color = isError ? "#ff4757" : "#2ed573";
+        el.style.color = isError ? "#ef4444" : "#10b981";
         el.innerText = msg;
     }
 
     function generateCode() {
-        const randomPart = Math.random().toString(36).substr(2, 6).toUpperCase();
-        document.getElementById("newCode").value = "VIP-" + randomPart;
+        const randomPart = Math.random().toString(36).substr(2, 8).toUpperCase();
+        document.getElementById("newCode").value = "HASSANY-" + randomPart;
+    }
+
+    function copyText(text) {
+        navigator.clipboard.writeText(text);
+        alert("تم نسخ الكود: " + text);
     }
 
     async function loadCodes() {
@@ -104,25 +99,24 @@
         
         localStorage.setItem("ghToken", token);
         localStorage.setItem("repoName", repo);
-        showStatus("جاري جلب الأكواد...");
+        showStatus("جاري الاتصال بقاعدة البيانات... ⏳");
 
         try {
             const res = await fetch(`https://api.github.com/repos/${repo}/contents/${FILE_PATH}`, {
                 headers: { "Authorization": `token ${token}` }
             });
-            if(!res.ok) throw new Error("تأكد من التوكن واسم المستودع!");
+            if(!res.ok) throw new Error("تأكد من التوكن وصلاحياته واسم المستودع!");
             
             const data = await res.json();
             fileSha = data.sha;
             
-            // فك تشفير الملف
             const decodedContent = decodeURIComponent(escape(window.atob(data.content)));
             codesDb = JSON.parse(decodedContent);
             
             renderTable();
-            showStatus("✅ تم جلب الأكواد بنجاح!");
+            showStatus("✅ تم جلب البيانات بنجاح!");
         } catch (e) {
-            showStatus("❌ خطأ: " + e.message, true);
+            showStatus("❌ " + e.message, true);
         }
     }
 
@@ -131,22 +125,33 @@
         tbody.innerHTML = "";
         
         for (const [code, info] of Object.entries(codesDb)) {
-            // دعم التوافق مع الأكواد القديمة (True/False)
-            const isUsed = (typeof info === 'boolean') ? info : info.is_used;
-            const duration = (typeof info === 'boolean') ? "غير محدد" : (info.duration === 0 ? "دائمي" : info.duration + " أيام");
-            const expiry = info.expires_at ? info.expires_at : "غير مفعل بعد";
+            let isUsed = false, durationStr = "", expiry = "غير مفعل", hasDevice = false;
+
+            if (typeof info === 'boolean') {
+                isUsed = info; durationStr = "قديم";
+            } else {
+                isUsed = info.is_used;
+                durationStr = info.duration === 0 ? "دائمي ♾️" : info.duration + " أيام";
+                expiry = info.expires_at || "غير مفعل";
+                hasDevice = !!info.device_id;
+            }
             
-            const statusBadge = isUsed 
-                ? `<span class="badge bg-red">مستخدم</span>` 
-                : `<span class="badge bg-green">جديد</span>`;
+            const statusBadge = isUsed ? `<span class="badge bg-red">مستخدم</span>` : `<span class="badge bg-green">جديد</span>`;
+            
+            // زر التصفير يظهر فقط إذا الكود مرتبط بجهاز
+            const resetBtn = hasDevice ? `<button class="btn-warning" onclick="resetDevice('${code}')" title="فك ارتباط الجهاز">تصفير 🔄</button>` : '';
 
             tbody.innerHTML += `
                 <tr>
-                    <td style="font-family: monospace;">${code}</td>
-                    <td>${duration}</td>
+                    <td style="font-family: monospace; font-weight:bold;">${code}</td>
+                    <td>${durationStr}</td>
                     <td>${statusBadge}</td>
-                    <td dir="ltr" style="text-align: right;">${expiry}</td>
-                    <td><button class="btn-danger" onclick="deleteCode('${code}')">حذف</button></td>
+                    <td dir="ltr" style="text-align: right; color:#94a3b8;">${expiry}</td>
+                    <td style="display: flex; gap: 5px;">
+                        <button class="btn-copy" onclick="copyText('${code}')">نسخ 📋</button>
+                        ${resetBtn}
+                        <button class="btn-danger" onclick="deleteCode('${code}')">حذف 🗑️</button>
+                    </td>
                 </tr>
             `;
         }
@@ -154,57 +159,56 @@
 
     async function addCode() {
         const code = document.getElementById("newCode").value.trim();
-        const duration = parseInt(document.getElementById("codeDuration").value);
+        const duration = parseInt(document.getElementById("codeDuration").value) || 0;
         if(!code) return alert("اكتب الكود أولاً!");
         if(codesDb[code]) return alert("هذا الكود موجود مسبقاً!");
 
-        // الهيكلية الجديدة للكود
         codesDb[code] = {
             is_used: false,
             duration: duration,
-            expires_at: null
+            expires_at: null,
+            device_id: null
         };
         
         await saveToGithub("إضافة كود جديد: " + code);
         document.getElementById("newCode").value = "";
     }
 
+    async function resetDevice(code) {
+        if(!confirm(`هل أنت متأكد من تصفير ارتباط الجهاز للكود ${code}؟\nسيتمكن اللاعب من الدخول بجهاز آخر.`)) return;
+        codesDb[code].device_id = null;
+        await saveToGithub("تصفير الجهاز للكود: " + code);
+    }
+
     async function deleteCode(code) {
-        if(!confirm(`هل أنت متأكد من حذف الكود ${code}؟`)) return;
+        if(!confirm(`حذف الكود ${code} نهائياً؟`)) return;
         delete codesDb[code];
         await saveToGithub("حذف كود: " + code);
     }
 
     async function saveToGithub(commitMsg) {
-        showStatus("⏳ جاري الحفظ في القاعدة...");
+        showStatus("⏳ جاري حفظ التعديلات...");
         const token = localStorage.getItem("ghToken");
         const repo = localStorage.getItem("repoName");
         
         const jsonStr = JSON.stringify(codesDb, null, 2);
         const encodedContent = window.btoa(unescape(encodeURIComponent(jsonStr)));
 
-        const body = {
-            message: commitMsg,
-            content: encodedContent,
-            sha: fileSha
-        };
+        const body = { message: commitMsg, content: encodedContent, sha: fileSha };
 
         try {
             const res = await fetch(`https://api.github.com/repos/${repo}/contents/${FILE_PATH}`, {
                 method: "PUT",
-                headers: {
-                    "Authorization": `token ${token}`,
-                    "Content-Type": "application/json"
-                },
+                headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
             
             if(!res.ok) throw new Error("فشل الحفظ!");
             const data = await res.json();
-            fileSha = data.content.sha; // تحديث SHA للمرات القادمة
+            fileSha = data.content.sha;
             
             renderTable();
-            showStatus("✅ تم الحفظ بنجاح!");
+            showStatus("✅ تم حفظ التعديلات بنجاح!");
         } catch (e) {
             showStatus("❌ خطأ أثناء الحفظ", true);
         }
